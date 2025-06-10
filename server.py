@@ -164,7 +164,7 @@ async def handle_call_tool(
             if match:
                 # Check if the match contains the expected substring
                 matched_text = match.group(0)
-                if expected in matched_text or matched_text == expected:
+                if matched_text == expected:
                     results.append(f"✅ Test case {i}: PASSED")
                     results.append(f"   Input: '{input_str}'")
                     results.append(f"   Expected: '{expected}'")
