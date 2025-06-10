@@ -28,6 +28,35 @@ python server.py
 
 The server will run using stdin/stdout and can be connected to by any MCP-compatible client.
 
+### Configuration
+You can also add a configuration. For example, for Claude Desktop, you can have:
+```json
+{
+  "mcpServers": {
+    "regex-mcp": {
+      "command": "python3",
+      "args": ["/absolute/path/to/MCP/RegexMCP/server.py"],
+      "cwd": "absolute/path/to/MCP/RegexMCP"
+    }
+  }
+}
+```
+Or, for other applications, such as Zed:
+
+```json
+"context_servers": {
+  "regex-mcp-server": {
+    "command": {
+      "path": "/path/to/python3",
+      "args": ["/absolute/path/to/MCP/RegexMCP/server.py"],
+      "env": {}
+    },
+    "settings": {}
+  }
+}
+```
+Then, you will be able to use the server in these tools without having to run the python script manually!
+
 ### Available Tools
 
 The server provides four main tools:
