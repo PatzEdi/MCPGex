@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import asyncio
 import re
 from typing import Any, Dict, List, Optional, Tuple
@@ -32,16 +30,26 @@ async def handle_list_tools() -> List[types.Tool]:
                         "type": "string",
                         "description": "The input string to test the regex pattern against"
                     },
-                    "expected_match": {
-                        "type": "string",
-                        "description": "The expected substring that should be matched/extracted by the regex"
+                    "expected_matches": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Array of substrings that should be matched/extracted by the regex"
+                    },
+                    "groups": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        },
+                        "description": "The groups that should be extracted by the regex. This is an array of numbers"
                     },
                     "description": {
                         "type": "string",
                         "description": "Optional description of what this test case is checking for"
                     }
                 },
-                "required": ["input_string", "expected_match"]
+                "required": ["input_string", "expected_matches", "groups"]
             }
         ),
         types.Tool(
@@ -92,12 +100,14 @@ async def handle_call_tool(
 
     if name == "add_test_case":
         input_string = arguments.get("input_string", "")
-        expected_match = arguments.get("expected_match", "")
+        expected_matches = arguments.get("expected_matches", [])
+        groups = arguments.get("groups", [])
         description = arguments.get("description", "")
 
         test_case = {
             "input_string": input_string,
-            "expected_match": expected_match,
+            "expected_matches": expected_matches,
+            "groups": groups,
             "description": description
         }
 
@@ -106,7 +116,7 @@ async def handle_call_tool(
         return [
             types.TextContent(
                 type="text",
-                text=f"Added test case:\n- Input: '{input_string}'\n- Expected match: '{expected_match}'\n- Description: {description or 'None'}\n\nTotal test cases: {len(test_cases)}"
+                text=f"Added test case:\n- Input: '{input_string}'\n- Expected matches: {expected_matches}\n- Groups: {groups}\n- Description: {description or 'None'}\n\nTotal test cases: {len(test_cases)}"
             )
         ]
 
@@ -155,7 +165,8 @@ async def handle_call_tool(
 
         for i, test_case in enumerate(test_cases, 1):
             input_str = test_case["input_string"]
-            expected = test_case["expected_match"]
+            groups = test_case["groups"]
+            expected_matches = test_case["expected_matches"]
             description = test_case.get("description", "")
 
             # Try to find the expected match in the input string
@@ -163,27 +174,30 @@ async def handle_call_tool(
 
             if match:
                 # Check if the match contains the expected substring
-                matched_text = match.group(0)
-                if matched_text == expected:
+                matched_texts = [match.group(g) for g in groups] if groups else [match.group(0)] # Where groups  = e.g. [1,2]
+                if sorted(matched_texts) == sorted(expected_matches):
                     results.append(f"✅ Test case {i}: PASSED")
                     results.append(f"   Input: '{input_str}'")
-                    results.append(f"   Expected: '{expected}'")
-                    results.append(f"   Matched: '{matched_text}'")
+                    results.append(f"   Expected: {expected_matches}")
+                    results.append(f"   Groups: '{groups}'")
+                    results.append(f"   Matched: {matched_texts}")
                     if description:
                         results.append(f"   Description: {description}")
                     passed += 1
                 else:
-                    results.append(f"❌ Test case {i}: FAILED")
+                    results.append(f"🛑 Test case {i}: FAILED")
                     results.append(f"   Input: '{input_str}'")
-                    results.append(f"   Expected: '{expected}'")
-                    results.append(f"   Matched: '{matched_text}' (doesn't contain expected)")
+                    results.append(f"   Expected: '{expected_matches}'")
+                    results.append(f"   Groups: '{groups}'")
+                    results.append(f"   Matched: '{matched_texts}' (doesn't contain expected)")
                     if description:
                         results.append(f"   Description: {description}")
                     failed += 1
             else:
-                results.append(f"❌ Test case {i}: FAILED")
+                results.append(f"🛑 Test case {i}: FAILED")
                 results.append(f"   Input: '{input_str}'")
-                results.append(f"   Expected: '{expected}'")
+                results.append(f"   Expected: '{expected_matches}'")
+                results.append(f"   Groups: '{groups}'")
                 results.append(f"   Matched: None")
                 if description:
                     results.append(f"   Description: {description}")
@@ -221,7 +235,8 @@ async def handle_call_tool(
         for i, test_case in enumerate(test_cases, 1):
             result.append(f"Test case {i}:")
             result.append(f"  Input: '{test_case['input_string']}'")
-            result.append(f"  Expected match: '{test_case['expected_match']}'")
+            result.append(f"  Expected matches: {test_case['expected_matches']}")
+            result.append(f"   Groups: '{test_case['groups']}'")
             if test_case.get("description"):
                 result.append(f"  Description: {test_case['description']}")
             result.append("")
