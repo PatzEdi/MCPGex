@@ -194,11 +194,11 @@ async def handle_call_tool(
                         results.append(f"   Description: {description}")
                     failed += 1
             else:
-                results.append(f"🛑 Test case {i}: FAILED")
+                results.append(f"0️⃣ Test case {i}: NO MATCHES FOUND")
                 results.append(f"   Input: '{input_str}'")
                 results.append(f"   Expected: '{expected_matches}'")
                 results.append(f"   Groups: '{groups}'")
-                results.append(f"   Matched: None")
+                results.append(f"   Matched: '{[]}'")
                 if description:
                     results.append(f"   Description: {description}")
                 failed += 1
