@@ -103,6 +103,14 @@ async def handle_call_tool(
         expected_matches = arguments.get("expected_matches", [])
         groups = arguments.get("groups", [])
         description = arguments.get("description", "")
+        
+        if len(groups) != len(expected_matches):
+            return [
+                types.TextContent(
+                    type="text",
+                    text=f"Error: Invalid test case. Number of groups ({len(groups)}) does not match number of expected matches ({len(expected_matches)}). Perhaps, input string contains multiple matches?"
+                )
+            ]
 
         test_case = {
             "input_string": input_string,
@@ -171,7 +179,7 @@ async def handle_call_tool(
 
             # Try to find the expected match in the input string
             match = compiled_pattern.search(input_str)
-
+            
             if match:
                 # Check if the match contains the expected substring
                 matched_texts = [match.group(g) for g in groups] if groups else [match.group(0)] # Where groups  = e.g. [1,2]
@@ -189,7 +197,7 @@ async def handle_call_tool(
                     results.append(f"   Input: '{input_str}'")
                     results.append(f"   Expected: '{expected_matches}'")
                     results.append(f"   Groups: '{groups}'")
-                    results.append(f"   Matched: '{matched_texts}' (doesn't contain expected)")
+                    results.append(f"   Matched: '{matched_texts}' (doesn't match expected)")
                     if description:
                         results.append(f"   Description: {description}")
                     failed += 1
