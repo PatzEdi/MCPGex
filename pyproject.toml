@@ -1,12 +1,14 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
-name = "regex-mcp"
+name = "mcpgex"
 version = "0.1.0"
-description = "An MCP server for testing and validating regex patterns against test cases"
+authors = [{ name = "PatzEdi", email = "edwardferrari717@gmail.com" }]
+description = "MCP server for testing and validating regex patterns against test cases"
 readme = "README.md"
+keywords = ["mcp", "regex mcp", "regex finder", "regex llm"]
 requires-python = ">=3.8"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -21,36 +23,13 @@ classifiers = [
 ]
 dependencies = ["mcp>=0.1.0"]
 
-[project.optional-dependencies]
-dev = ["pytest>=6.0", "pytest-asyncio>=0.21.0", "black>=22.0.0", "mypy>=1.0.0"]
-
 [project.scripts]
-regex-mcp = "server:main"
+mcpgex = "mcpgex:main"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["*"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcpgex"]
 
-[tool.black]
-line-length = 88
-target-version = ['py38']
-
-[tool.mypy]
-python_version = "3.8"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
-
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
-testpaths = ["tests"]
-python_files = ["test_*.py", "*_test.py"]
+[project.urls]
+"Homepage" = "https://github.com/PatzEdi"
+"Repository" = "https://github.com/PatzEdi/RegexMCP"
+"Bug Tracker" = "https://github.com/PatzEdi/RegexMCP/issues"

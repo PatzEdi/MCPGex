@@ -13,7 +13,7 @@ import mcp.server.stdio
 test_cases: List[Dict[str, Any]] = []
 
 # Initialize the MCP server
-server = Server("regex-mcp")
+server = Server("mcpgex")
 
 
 @server.list_tools()
@@ -103,7 +103,7 @@ async def handle_call_tool(
         expected_matches = arguments.get("expected_matches", [])
         groups = arguments.get("groups", [])
         description = arguments.get("description", "")
-        
+
         if len(groups) != len(expected_matches):
             return [
                 types.TextContent(
@@ -179,7 +179,7 @@ async def handle_call_tool(
 
             # Try to find the expected match in the input string
             match = compiled_pattern.search(input_str)
-            
+
             if match:
                 # Check if the match contains the expected substring
                 matched_texts = [match.group(g) for g in groups] if groups else [match.group(0)] # Where groups  = e.g. [1,2]
@@ -273,14 +273,14 @@ async def handle_call_tool(
         raise ValueError(f"Unknown tool: {name}")
 
 
-async def main():
+async def serve():
     # Run the server using stdin/stdout streams
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="regex-mcp",
+                server_name="mcpgex",
                 server_version="0.1.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),
@@ -291,4 +291,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(serve())

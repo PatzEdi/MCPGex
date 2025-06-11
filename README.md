@@ -1,4 +1,4 @@
-# Regex MCP
+# MCPGex
 
 This is an MCP (Model Context Protocol) server that allows LLMs to test and validate regex patterns against test cases. It provides a systematic way to develop regex patterns by defining expected outcomes and iteratively testing patterns until all requirements are satisfied.
 
