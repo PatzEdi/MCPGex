@@ -165,6 +165,7 @@ async def handle_call_tool(
         results = []
         passed = 0
         failed = 0
+        no_match = 0
 
         results.append(f"Testing regex pattern: {pattern}")
         if flags_str:
@@ -209,12 +210,12 @@ async def handle_call_tool(
                 results.append(f"   Matched: '{[]}'")
                 if description:
                     results.append(f"   Description: {description}")
-                failed += 1
+                no_match += 1
 
             results.append("")
 
         results.append("-" * 50)
-        results.append(f"Summary: {passed} passed, {failed} failed")
+        results.append(f"Summary: {passed} passed, {failed} failed, {no_match} with no match")
 
         if failed == 0:
             results.append("🎉 All test cases passed! The regex pattern is working correctly.")
