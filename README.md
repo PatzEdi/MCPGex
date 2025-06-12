@@ -53,7 +53,7 @@ You can also add a configuration. For example, for Claude Desktop, you can have:
   "mcpServers": {
     "mcpgex": {
       "command": "python3",
-      "args": ["-m", "mcpgex"],
+      "args": ["-m", "mcpgex"]
     }
   }
 }
