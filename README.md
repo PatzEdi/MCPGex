@@ -44,7 +44,7 @@ You can also add a configuration. For example, for Claude Desktop, you can have:
 ```json
 {
   "mcpServers": {
-    "regex-mcp": {
+    "mcpgex": {
       "command": "python3",
       "args": ["-m", "mcpgex"],
     }
@@ -56,7 +56,7 @@ Or, for other applications, such as Zed:
 
 ```json
 "context_servers": {
-  "regex-mcp-server": {
+  "mcpgex": {
     "command": {
       "path": "python3",
       "args": ["-m", "mcpgex"]
