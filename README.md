@@ -9,7 +9,7 @@
 MCPGex is an MCP server that allows LLMs to test and validate regex patterns against test cases. It provides a systematic way to develop regex patterns by defining or generating expected outcomes and iteratively testing patterns until all requirements are satisfied.
 
 > [!WARNING]
-> PyPi package is not available yet and will be published soon.
+> MCPGex is still in its early stages.
 
 ## Index
 - [How it works](#how-it-works)
