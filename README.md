@@ -6,6 +6,18 @@
 <img src="https://github.com/PatzEdi/MCPGex/raw/main/assets/logo.png" alt="mcpgex-high-resolution-logo-transparent" width="500">
 </div>
 
+<p align="center">
+	<img src="https://img.shields.io/badge/License-MIT-brightgreen?style=flat-square"
+		height="23">
+	<img src="https://img.shields.io/badge/Creator-PatzEdi-brightgreen?style=flat-square"
+		height="23">
+</p>
+
+<p align = "center">
+	<img src="https://img.shields.io/pypi/v/MCPGex?style=flat-square&color=%23FFA500"
+		height="23">
+</p>
+
 MCPGex is an MCP server that allows LLMs to test and validate regex patterns against test cases. It provides a systematic way to develop regex patterns by defining or generating expected outcomes and iteratively testing patterns until all requirements are satisfied.
 
 > [!WARNING]
