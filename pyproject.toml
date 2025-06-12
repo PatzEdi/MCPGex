@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mcpgex"
-version = "0.1.0"
+version = "0.1.2"
 authors = [{ name = "PatzEdi", email = "edwardferrari717@gmail.com" }]
 description = "MCP server for testing and validating regex patterns against test cases"
 readme = "README.md"
