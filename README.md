@@ -71,19 +71,6 @@ You can also add a configuration. For example, for Claude Desktop, you can have:
 }
 ```
 
-Or, for other applications, such as Zed:
-
-```json
-"context_servers": {
-  "mcpgex": {
-    "command": {
-      "path": "python3",
-      "args": ["-m", "mcpgex"]
-    },
-    "settings": {}
-  }
-}
-```
 Then, you will be able to use the server in these tools without having to run the python script manually!
 
 <details>
