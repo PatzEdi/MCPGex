@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/patzedi-mcpgex-badge.png)](https://mseep.ai/app/patzedi-mcpgex)
+
 # MCPGex
 
 *MCP server for finding, testing and refining regex patterns*
